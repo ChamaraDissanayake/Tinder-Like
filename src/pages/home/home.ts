@@ -36,7 +36,9 @@ export class HomePage {
   }
 
   ngOnInit(): void{
-    this.setStyle('transparent');
+    this.setStyleLike('transparent');
+    this.setStyleNope('transparent');
+    this.setStyleLike('transparent');
   }
   
   ngAfterViewInit() {
@@ -58,11 +60,13 @@ export class HomePage {
     
     if (x < 0) {
       color = '#FF' + hexCode + hexCode;
+      this.setStyleNope(color);      
     } else {
       color = '#' + hexCode + 'FF' + hexCode;
+      this.setStyleLike(color);      
     }
-    this.setStyle(color);
-    // element.style.background = color;
+    
+    element.style.background = color;
     element.style['transform'] = `translate3d(0, 0, 0) translate(${x}px, ${y}px) rotate(${r}deg)`;
   }
 
@@ -74,11 +78,12 @@ export class HomePage {
   
     if (y < 0) {
       color = '#' + hexCode + hexCode + 'FF';
+      this.setStyleSuperLike(color);
     } else {
       color = '#' + 'FF' + 'FF' + hexCode;
     }
-    this.setStyle(color);
-    // element.style.background = color;
+    
+    element.style.background = color;
     element.style['transform'] = `translate3d(0, 0, 0) translate(${x}px, ${y}px) rotate(${r}deg)`;
   }
   
@@ -95,6 +100,12 @@ export class HomePage {
     } else {
       this.recentCard = 'You disliked: ' + removedCard.email;
     }
+
+    setTimeout(() => {
+      this.setStyleLike('transparent');
+      this.setStyleNope('transparent');
+      this.setStyleLike('transparent');
+    }, 500);
   }
 
   voteSuper(superLike: boolean) {
@@ -109,7 +120,11 @@ export class HomePage {
     } else {
       this.recentCard = 'You skipped: ' + removedCard.email;
     }
-    this.dragImage();
+    setTimeout(() => {
+      this.setStyleLike('transparent');
+      this.setStyleNope('transparent');
+      this.setStyleSuperLike('transparent');
+    }, 500);  
   }
   
   // Add new cards to our array
@@ -187,18 +202,29 @@ export class HomePage {
     };
   }
 
-  setStyle(value: string): void {
-    this.elementRef.nativeElement.style.setProperty('--set-color', value);     
+  setStyleLike(value: string): void {
+    this.elementRef.nativeElement.style.setProperty('--set-color-like', value);
+    this.elementRef.nativeElement.style.setProperty('--set-color-nope', 'transparent');
+    this.elementRef.nativeElement.style.setProperty('--set-color-super-like', 'transparent');
+  }
+  
+  setStyleNope(value: string): void {
+    this.elementRef.nativeElement.style.setProperty('--set-color-like', 'transparent');
+    this.elementRef.nativeElement.style.setProperty('--set-color-nope', value);
+    this.elementRef.nativeElement.style.setProperty('--set-color-super-like', 'transparent');
+  }
+
+  setStyleSuperLike(value: string): void {
+    this.elementRef.nativeElement.style.setProperty('--set-color-like', 'transparent');
+    this.elementRef.nativeElement.style.setProperty('--set-color-nope', 'transparent');
+    this.elementRef.nativeElement.style.setProperty('--set-color-super-like', value);
   }
 
   prof(){
-    {
-      this.navCtrl.push(ProfilePage);
-      }
+    this.navCtrl.push(ProfilePage);
   }
   chatm(){
-    this.dragImage()
-    // this.navCtrl.push(ChatmainPage);    
+    this.navCtrl.push(ChatmainPage);    
   }
   chatid(){
     this.navCtrl.push(ChatindPage)

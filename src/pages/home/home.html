@@ -37,11 +37,12 @@
         </ion-avatar>
         <h2>{{ c.name.first }} {{ c.name.last}}</h2>
         <p>{{ c.email }}</p> -->
-        <img style="border-radius:10px;" [src]="c.picture.large">        
+        <img style="border-radius:10px; height: 400px;" [src]="c.picture.large">        
       </ion-item>
       <ion-item style="position: relative; background: unset;">
-        <span class="like-label liketemp">Like</span>
-        <span class="like-label liketemp" style="float:right; transform: rotate(20deg);">Nope</span>
+        <span class="response-label like-label">Like</span>
+        <span class="response-label nope-label">Nope</span>
+        <span class="response-label super-like-label">Super Like</span>
       </ion-item>
 
       <!-- <ion-card-content *ngIf="c.location">

@@ -1,10 +1,10 @@
 page-home {
   #card-stack {
-    width: 95%;
-    height: 80%;
+    // width: 100%;
+    height: 98%;
     // background: #047915;
     // border: 10px solid #4cb338;
-    margin: 10px auto 0;
+    // margin: 10px auto 0;
     position: relative;    
   }
  
@@ -12,18 +12,19 @@ page-home {
     border-radius: 10px;
     position: absolute;
     text-align: center;
-    top: 3%;
-    height: 75%;
+    // top: 3%;
+    height: 79%;
+    width: 100%;
   }
 
-  // .switch {
-  //   position: relative;
-  //   display: inline-block;
-  //   width: 60px;
-  //   height: 34px;
-  // }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
   
-  // .switch input {display:none;}
+  .switch input {display:none;}
   
   .slider {
     position: absolute;
@@ -347,14 +348,37 @@ label {
 //   text-align: center !important;
 // }
 
-  .like-label{
+  .response-label{
     border: 2px solid;
     text-align: center;
-    width: 20%;
+    margin:6%;
+    font-size: xxx-large;
   }
-  .liketemp{
-    color:var(--set-color);    
-  }&:hover{
-    color: transparent;
+
+  .like-label{
+    color:var(--set-color-like);
+    float:left;
+    transform: rotate(-20deg);
+  }
+
+  .nope-label{
+    color:var(--set-color-nope);
+    float:right;
+    transform: rotate(20deg);
+  }
+
+  .super-like-label{
+    color:var(--set-color-super-like);
+    display: table;
+    transform: rotate(-10deg);
+    margin: 80% 17%;
+  }
+
+  .scroll-content {
+    padding: 0px !important;
+  }
+
+  .item-md {
+    padding: 0px !important;
   }
 }
