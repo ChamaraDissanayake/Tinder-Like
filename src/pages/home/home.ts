@@ -1,11 +1,17 @@
-import { Component, ViewChild, ViewChildren, QueryList } from '@angular/core';
-// import { NavController } from 'ionic-angular';
+import { Component, ViewChild, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { NavController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/Rx';
 // import { StackConfig, Stack, Card, ThrowEvent, DragEvent, SwingStackComponent, SwingCardComponent } from 'angular2-swing';
 import { StackConfig, DragEvent, SwingStackComponent, SwingCardComponent } from 'angular2-swing';
-import { of } from 'rxjs/observable/of';
+// import { of } from 'rxjs/observable/of';
 // import { isYieldExpression } from 'typescript';
+
+import { ProfilePage } from '../profile/profile';
+import { ChatmainPage } from '../chatmain/chatmain';
+import { ChatindPage } from '../chatind/chatind';
+import { PhotoPage } from '../photo/photo';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -18,11 +24,19 @@ export class HomePage {
 
   cards: Array<any>;
   stackConfig: StackConfig;
-  recentCard: string = '';  
-  
+  recentCard: string = '';
 
-  constructor(private http: Http) {
+  constructor
+  (
+    private http: Http,
+    public navCtrl: NavController,
+    private elementRef:ElementRef
+  ) {
     this.dragImage();
+  }
+
+  ngOnInit(): void{
+    this.setStyle('transparent');
   }
   
   ngAfterViewInit() {
@@ -47,8 +61,8 @@ export class HomePage {
     } else {
       color = '#' + hexCode + 'FF' + hexCode;
     }
-
-    element.style.background = color;
+    this.setStyle(color);
+    // element.style.background = color;
     element.style['transform'] = `translate3d(0, 0, 0) translate(${x}px, ${y}px) rotate(${r}deg)`;
   }
 
@@ -63,36 +77,39 @@ export class HomePage {
     } else {
       color = '#' + 'FF' + 'FF' + hexCode;
     }
-
-    element.style.background = color;
+    this.setStyle(color);
+    // element.style.background = color;
     element.style['transform'] = `translate3d(0, 0, 0) translate(${x}px, ${y}px) rotate(${r}deg)`;
   }
   
   // Connected through HTML
   voteUp(like: boolean) {
-    console.log(like, 'swipe is working');
     // let removedCard = this.cards.shift();
     let removedCard = this.cards.pop();
-    this.addNewCards(1);
+
+    if(this.cards.length<4){
+      this.addNewCards(4-this.cards.length);
+    }
     if (like) {
       this.recentCard = 'You liked: ' + removedCard.email;
     } else {
       this.recentCard = 'You disliked: ' + removedCard.email;
     }
-    // console.log(this.cards,'1111')
   }
 
   voteSuper(superLike: boolean) {
-    console.log(superLike,'working');
     // let removedCard = this.cards.shift();
     let removedCard = this.cards.pop();
-    this.addNewCards(1);
+
+    if(this.cards.length<4){
+      this.addNewCards(4-this.cards.length);
+    }
     if (superLike) {
       this.recentCard = 'You super liked: ' + removedCard.email;
     } else {
       this.recentCard = 'You skipped: ' + removedCard.email;
     }
-    // console.log(this.cards,'1111')
+    this.dragImage();
   }
   
   // Add new cards to our array
@@ -102,9 +119,8 @@ export class HomePage {
     .subscribe(result => {
       for (let val of result) {        
         this.cards.push(val);
-        console.log(this.cards.length, this.cards);
       }
-    })
+    })    
   }
   
   // http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
@@ -126,8 +142,9 @@ export class HomePage {
     let positiveX: any;
     let positiveY: any;
     
-    this.stackConfig = {
+    this.stackConfig = {      
       throwOutConfidence: (offsetX, offsetY, element) => {
+        
         if(offsetY<0){
           positiveOffsetY = -1 * offsetY;
         } else {
@@ -140,10 +157,8 @@ export class HomePage {
         }
         
         if(positiveOffsetX>=positiveOffsetY){
-          console.log('if is working');
           minThrowDistance = Math.min(Math.abs(offsetX) / (element.offsetWidth/2), 1);
         } else {
-          console.log('else is working');
           minThrowDistance = Math.min(Math.abs(offsetY) / (element.offsetWidth/2), 1);
         }
         return minThrowDistance;
@@ -170,5 +185,28 @@ export class HomePage {
         return 800;
       }
     };
+  }
+
+  setStyle(value: string): void {
+    this.elementRef.nativeElement.style.setProperty('--set-color', value);     
+  }
+
+  prof(){
+    {
+      this.navCtrl.push(ProfilePage);
+      }
+  }
+  chatm(){
+    this.dragImage()
+    // this.navCtrl.push(ChatmainPage);    
+  }
+  chatid(){
+    this.navCtrl.push(ChatindPage)
+  }
+  pho(){
+    this.navCtrl.push(PhotoPage)
+  }
+  lgn(){
+    this.navCtrl.push(LoginPage)
   }
 }

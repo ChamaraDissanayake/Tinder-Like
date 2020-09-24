@@ -3,16 +3,28 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { HttpModule } from '@angular/http';
+import { SwingModule } from 'angular2-swing';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { HttpModule } from '@angular/http';
-import { SwingModule } from 'angular2-swing';
+import { ProfilePage } from '../pages/profile/profile';
+import { MatchPage } from '../pages/match/match';
+import { ChatmainPage } from '../pages/chatmain/chatmain';
+import { ChatindPage } from '../pages/chatind/chatind';
+import { PhotoPage } from '../pages/photo/photo';
+import { LoginPage } from '../pages/login/login';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    ProfilePage,
+    MatchPage,
+    ChatmainPage,
+    ChatindPage,
+    PhotoPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -23,7 +35,13 @@ import { SwingModule } from 'angular2-swing';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    ProfilePage,
+    MatchPage,
+    ChatmainPage,
+    ChatindPage,
+    PhotoPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
